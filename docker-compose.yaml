@@ -1,0 +1,42 @@
+version: '3.9'
+services:
+  sro:
+    container_name: immigrant-transform-sro
+    image: registry.gitlab.com/immigrant-data-driven-development/etl/transform-and-load/sro
+    environment:
+    - KAFKA_SERVER=${KAFKA_SERVER_DEVOPS}
+    - KAFKA_PORT=${KAFKA_PORT_DEVOPS}
+    - DB_URL=${DB_URL_DEVOPS}
+    - DB_PORT=${DB_PORT_DEVOPS}
+    - DB_NAME=${DB_NAME_DEVOPS}
+    - DB_USERNAME=${DB_USERNAME_DEVOPS}
+    - DB_PASSWORD=${DB_PASSWORD_DEVOPS}
+    - SERVER_ETL=${SERVER_ETL_PORT_DEVOPS}
+    - MONGO_HOST=${MONGO_HOST_DEVOPS}
+    - MONGO_DB=${MONGO_HOST_DEVOPS}
+    - MONGO_PORT=${MONGO_PORT_DEVOPS}
+    env_file:
+      - .env
+  
+  ciro:
+    container_name: immigrant-transform-ciro
+    image: registry.gitlab.com/immigrant-data-driven-development/etl/transform-and-load/ciro
+    environment:
+    - KAFKA_SERVER=${KAFKA_SERVER_GITLAB}
+    - KAFKA_PORT=${KAFKA_PORT_GITLAB}
+    - DB_URL=${DB_URL_GITLAB}
+    - DB_PORT=${DB_PORT_GITLAB}
+    - DB_NAME=${DB_NAME_GITLAB}
+    - DB_USERNAME=${DB_USERNAME_GITLAB}
+    - DB_PASSWORD=${DB_PASSWORD_GITLAB}
+    - SERVER_ETL=${SERVER_ETL_PORT_GITLAB}
+    - MONGO_HOST=${MONGO_HOST_GITLAB}
+    - MONGO_DB=${MONGO_HOST_GITLAB}
+    - MONGO_PORT=${MONGO_PORT_GITLAB}
+    env_file:
+      - .env
+  
+networks: 
+  default: 
+    name: base-infrastrutrure
+    external: true  
